@@ -1,9 +1,9 @@
 # 🏦 NoBadget - Dynamic Parser Engine (OTA)
 
-[](https://www.google.com/search?q=https://opensource.org/licenses/MIT)
-[](https://www.google.com/search?q=%23)
-[](https://www.google.com/search?q=%23)
-[](https://www.google.com/search?q=%23)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Governance](https://img.shields.io/badge/Review-Strict_Manual-red.svg)](https://github.com/ToTo085/nobadget-parsers)
+[![JSON Schema Valid](https://img.shields.io/badge/JSON_Schema-Validated-brightgreen.svg)](https://github.com/ToTo085/nobadget-parsers)
+[![Zero Knowledge](https://img.shields.io/badge/Privacy-Zero_Knowledge-blue.svg)](https://github.com/ToTo085/nobadget-parsers)
 
 Benvenuto nel repository ufficiale dei **Profili di Parsing OTA (Over-The-Air)** di NoBadget.
 
