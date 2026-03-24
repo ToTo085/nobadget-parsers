@@ -1,0 +1,24 @@
+{
+  "id": "it_revolut_v1",
+  "bankName": "Revolut",
+  "fileExtension": "csv",
+  "skipRows": 0,
+  "delimiter": ",",
+  "headerMode": true,
+  "columnMapping": {
+    "date": "Data di inizio",
+    "description": "Descrizione",
+    "amount": "Importo",
+    "status": "State"
+  },
+  "dateFormat": "M/d/yy",
+  "decimalSeparator": ",",
+  "invertAmountSign": false,
+  "amountMode": "single",
+  "statusFilter": {
+    "column": "status",
+    "rejectValues": ["OPERAZIONE ANNULLATA", "DECLINED", "REVERTED"],
+    "mode": "exact"
+  },
+  "version": 1
+}

@@ -1,0 +1,21 @@
+{
+  "id": "it_bcc_cc_v1",
+  "bankName": "BCC Conto Corrente",
+  "fileExtension": "xls",
+  "skipRows": 12,
+  "headerMode": true,
+  "columnMapping": {
+    "date": "Data",
+    "description": "Causale",
+    "amountIn": "Avere",
+    "amountOut": "Dare"
+  },
+  "dateFormat": "dd/MM/yyyy",
+  "decimalSeparator": ",",
+  "invertAmountSign": false,
+  "amountMode": "split",
+  "descriptionFilter": {
+    "rejectContains": ["SALDO INIZIALE", "SALDO CONTABILE", "SALDO PRECEDENTE"]
+  },
+  "version": 1
+}

@@ -1,0 +1,24 @@
+{
+  "id": "it_satispay_v1",
+  "bankName": "Satispay",
+  "fileExtension": "xlsx",
+  "skipRows": 0,
+  "headerMode": true,
+  "columnMapping": {
+    "date": "Data",
+    "amount": "Importo",
+    "name": "Nome",
+    "description": "Descrizione",
+    "status": "Stato"
+  },
+  "dateFormat": "auto",
+  "decimalSeparator": ",",
+  "invertAmountSign": false,
+  "amountMode": "single",
+  "statusFilter": {
+    "column": "status",
+    "allowContains": ["\u2713", "approvato", "completato"]
+  },
+  "descriptionTemplate": "{name} - {description}",
+  "version": 1
+}

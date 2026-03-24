@@ -1,0 +1,8 @@
+Estratto conto - Conto corrente fittizio
+Data contabile;Causale;Entrate;Uscite
+01/01/2024;Accredito stipendio Test Azienda SRL;1.500,00;
+05/01/2024;Pagamento utenza fittizia;;85,00
+10/01/2024;Bonifico a Test Persona;;250,00
+15/01/2024;Accredito rimborso fittizio;45,00;
+20/01/2024;Addebito carta test;;120,50
+25/01/2024;Giroconto da altro conto test;300,00;

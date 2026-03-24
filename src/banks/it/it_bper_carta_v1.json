@@ -1,0 +1,18 @@
+{
+  "id": "it_bper_carta_v1",
+  "bankName": "BPER Carta di Credito",
+  "fileExtension": "csv",
+  "skipRows": 1,
+  "delimiter": ";",
+  "headerMode": true,
+  "columnMapping": {
+    "date": "Data operazione",
+    "description": "Descrizione operazione",
+    "amount": "Importo in Euro"
+  },
+  "dateFormat": "dd/MM/yyyy",
+  "decimalSeparator": ",",
+  "invertAmountSign": true,
+  "amountMode": "single",
+  "version": 1
+}

@@ -7,6 +7,30 @@
       "name": "Revolut",
       "format": "csv",
       "path": "banks/it/it_revolut_v1.json"
+    },
+    {
+      "id": "it_satispay_v1",
+      "name": "Satispay",
+      "format": "xlsx",
+      "path": "banks/it/it_satispay_v1.json"
+    },
+    {
+      "id": "it_bper_cc_v1",
+      "name": "BPER Conto Corrente",
+      "format": "csv",
+      "path": "banks/it/it_bper_cc_v1.json"
+    },
+    {
+      "id": "it_bper_carta_v1",
+      "name": "BPER Carta di Credito",
+      "format": "csv",
+      "path": "banks/it/it_bper_carta_v1.json"
+    },
+    {
+      "id": "it_bcc_cc_v1",
+      "name": "BCC Conto Corrente",
+      "format": "xls",
+      "path": "banks/it/it_bcc_cc_v1.json"
     }
   ]
 }

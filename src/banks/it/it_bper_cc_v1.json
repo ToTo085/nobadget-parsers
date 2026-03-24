@@ -1,0 +1,19 @@
+{
+  "id": "it_bper_cc_v1",
+  "bankName": "BPER Conto Corrente",
+  "fileExtension": "csv",
+  "skipRows": 1,
+  "delimiter": ";",
+  "headerMode": true,
+  "columnMapping": {
+    "date": "Data contabile",
+    "description": "Causale",
+    "amountIn": "Entrate",
+    "amountOut": "Uscite"
+  },
+  "dateFormat": "dd/MM/yyyy",
+  "decimalSeparator": ",",
+  "invertAmountSign": false,
+  "amountMode": "split",
+  "version": 1
+}
