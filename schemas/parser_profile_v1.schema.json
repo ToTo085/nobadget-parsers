@@ -1,0 +1,211 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ToTo085/nobadget-parsers/main/schemas/parser_profile_v1.schema.json",
+  "title": "ParserProfile",
+  "description": "Schema di validazione v1 per i profili di parsing OTA di NoBadget. Corrisponde all'entità Dart DynamicCsvParser lato client.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "bankName",
+    "fileExtension",
+    "columnMapping",
+    "dateFormat",
+    "amountMode"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Chiave primaria univoca del profilo. Pattern: [iso_stato]_[identificatore_banca]_v[numero]. Esempio: it_revolut_v1, it_banca_sella_cc_v1.",
+      "pattern": "^[a-z]{2}_[a-z0-9_]+_v[0-9]+$",
+      "examples": ["it_revolut_v1", "it_satispay_v1", "it_banca_sella_cc_v2"]
+    },
+    "bankName": {
+      "type": "string",
+      "description": "Nome leggibile della banca, esposto nella UI dell'app. Esempio: 'Revolut', 'Satispay', 'Banca Sella'.",
+      "minLength": 1
+    },
+    "fileExtension": {
+      "type": "string",
+      "description": "Formato del file di esportazione supportato dalla banca. Determina il reader nativo da attivare nel motore DynamicCsvParser.",
+      "enum": ["csv", "xls", "xlsx"]
+    },
+    "skipRows": {
+      "type": "integer",
+      "description": "Numero di righe iniziali da saltare prima dell'header o dei dati. Utile per bypassare disclaimer legali o intestazioni testuali multi-riga.",
+      "default": 0,
+      "minimum": 0
+    },
+    "delimiter": {
+      "type": "string",
+      "description": "Separatore di colonna per file CSV. Ignorato per xls/xlsx. Esempi comuni: ',' (virgola), ';' (punto e virgola), '\\t' (tab).",
+      "default": ","
+    },
+    "columnMapping": {
+      "type": "object",
+      "description": "Dizionario di associazione tra i campi logici di NoBadget e le colonne del file sorgente. I valori sono stringhe (headerMode: true) o indici interi base-0 (headerMode: false).",
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "description": "Colonna della data della transazione.",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "amount": {
+          "description": "Colonna dell'importo (modalità single: contiene sia entrate che uscite con segno +/-).",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "amountIn": {
+          "description": "Colonna delle entrate (modalità split). Richiesto se amountMode è 'split'.",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "amountOut": {
+          "description": "Colonna delle uscite (modalità split). Richiesto se amountMode è 'split'.",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "description": {
+          "description": "Colonna della descrizione o causale della transazione.",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "status": {
+          "description": "Colonna dello stato della transazione (usata da statusFilter per filtrare le righe).",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "name": {
+          "description": "Colonna del nome della controparte o del beneficiario (usata da descriptionTemplate).",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        }
+      }
+    },
+    "headerMode": {
+      "type": "boolean",
+      "description": "Se true, i valori di columnMapping sono nomi di colonna (header). Se false, sono indici interi base-0.",
+      "default": false
+    },
+    "dateFormat": {
+      "type": "string",
+      "description": "Pattern di parsing della data. Sintassi standard Dart/ICU: 'dd/MM/yyyy', 'yyyy-MM-dd', 'M/d/yy'. Usare 'auto' per date ISO 8601 con riconoscimento automatico.",
+      "minLength": 1,
+      "examples": ["dd/MM/yyyy", "yyyy-MM-dd", "M/d/yy", "dd-MM-yyyy", "auto"]
+    },
+    "dateLocale": {
+      "type": "string",
+      "description": "Codice lingua BCP 47 per il parsing di date testuali (es. 'it' per '27 febbraio 2026', 'en' per 'February 27 2026'). Opzionale.",
+      "examples": ["it", "en", "de", "fr", "es"]
+    },
+    "decimalSeparator": {
+      "type": "string",
+      "description": "Carattere usato come separatore decimale negli importi. '.' per standard US/UK, ',' per standard europeo.",
+      "default": ",",
+      "enum": [".", ","]
+    },
+    "invertAmountSign": {
+      "type": "boolean",
+      "description": "Se true, inverte il segno di tutti gli importi. Necessario per banche che esportano le uscite come valori positivi.",
+      "default": false
+    },
+    "amountMode": {
+      "type": "string",
+      "description": "Modalità di lettura degli importi. 'single': unica colonna con segno +/-. 'split': colonne separate amountIn e amountOut. 'allExpense': tutte le transazioni sono trattate come uscite.",
+      "default": "single",
+      "enum": ["single", "split", "allExpense"]
+    },
+    "statusFilter": {
+      "type": "object",
+      "description": "Middleware opzionale per filtrare le righe in base al valore della colonna di stato. Operativo prima del mapping dei dati.",
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "description": "Riferimento alla colonna di stato: nome header (stringa) o indice base-0 (intero).",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "integer", "minimum": 0 }
+          ]
+        },
+        "rejectValues": {
+          "type": "array",
+          "description": "Lista nera: righe con un valore di stato corrispondente esattamente a uno di questi vengono scartate.",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "allowContains": {
+          "type": "array",
+          "description": "Lista bianca: vengono importate solo le righe in cui il valore di stato contiene almeno una di queste sottostringhe.",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "mode": {
+          "type": "string",
+          "description": "Modalità di confronto per rejectValues. 'exact': corrispondenza esatta. 'contains': corrispondenza per sottostringa. Default implicito: 'exact'.",
+          "examples": ["exact", "contains"]
+        }
+      }
+    },
+    "descriptionFilter": {
+      "type": "object",
+      "description": "Filtro opzionale per scartare transazioni la cui descrizione contiene stringhe indesiderate (es. righe di saldo iniziale o movimenti interni).",
+      "additionalProperties": false,
+      "required": ["rejectContains"],
+      "properties": {
+        "rejectContains": {
+          "type": "array",
+          "description": "Lista di sottostringhe: le transazioni la cui descrizione contiene almeno una di queste vengono scartate.",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      }
+    },
+    "descriptionTemplate": {
+      "type": "string",
+      "description": "Template di interpolazione per costruire una descrizione composita da più colonne. Usa le chiavi definite in columnMapping con sintassi {chiave}. Esempio: '{name} - {description}'.",
+      "minLength": 1,
+      "examples": ["{name} - {description}", "{description} ({status})", "{name}"]
+    },
+    "version": {
+      "type": "integer",
+      "description": "Versione incrementale del profilo. Incrementare ad ogni modifica per forzare la risincronizzazione OTA sui dispositivi client.",
+      "default": 1,
+      "minimum": 1
+    }
+  },
+  "if": {
+    "properties": {
+      "amountMode": { "const": "split" }
+    },
+    "required": ["amountMode"]
+  },
+  "then": {
+    "properties": {
+      "columnMapping": {
+        "required": ["date", "amountIn", "amountOut"]
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "columnMapping": {
+        "required": ["date", "amount"]
+      }
+    }
+  }
+}

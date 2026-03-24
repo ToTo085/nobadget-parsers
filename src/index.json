@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "lastUpdated": "2026-03-24",
+  "parsers": [
+    {
+      "id": "it_revolut_v1",
+      "name": "Revolut",
+      "format": "csv",
+      "path": "banks/it/it_revolut_v1.json"
+    }
+  ]
+}
